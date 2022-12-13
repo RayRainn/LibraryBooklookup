@@ -12,8 +12,8 @@ const expressLayouts = require('express-ejs-layouts')
 
 const bodyParser = require('body-parser')
 
-const indexRouter = require('./routes/index')
-const authorRouter = require('./routes/authors')
+const indexRouter = require('./Routes/index')
+const authorRouter = require('./Routes/authors')
 
 
 app.set('view engine', 'ejs')
