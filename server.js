@@ -1,5 +1,17 @@
 require('dotenv').config()
 
+
+
+
+
+
+
+
+//ACCESS_TOKEN_SECRET=fc68e0796bbcee42221518ecfd1ea2f5102e422db864067e7d39cb6becfb528bab6d3f6ec9dcce9240f6d3ffe132d65976a64a0386fbf70de7a3cbdadf6ce15b
+//REFRESH_TOKEN_SECRET=6ce40ed706a2706e285e2a9bd55094d4ae9172e4e2b84b326cba5e1a6f57b969eeb5cdf6e28e162fdd644735d0b66f4ad163a65ec6410685505bf02219cc3986
+//SESSION_SECRET=5a291f9ce34336ed907e0cfe5cff4d7c323c01877866ac3bdf6c34dcfead8cb2728cdcd2f8407029a80f932fa02974c8f515b7cc46ea9397a304d05f23e01298
+
+
 const express = require('express')
 const app = express()
 //require basically pulls what we import like dependencies from java
@@ -98,7 +110,7 @@ app.use(methodOverride('_method'))
 
 
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user.name})
+    res.render('test1.ejs', { name: req.user.name})
      
 })
 
