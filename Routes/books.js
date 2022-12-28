@@ -72,6 +72,12 @@ function removeBookCover(fileName) {
   })
 }
 
+
+
+
+
+
+
 async function renderNewPage(res, book, hasError = false) {
   try {
     const authors = await Author.find({})
@@ -85,5 +91,17 @@ async function renderNewPage(res, book, hasError = false) {
     res.redirect('/books')
   }
 }
+
+
+router.get('/:id', async (req, res )=> {
+  try{
+    const book = await Book.findById(req.params.id).populate('author').exec()
+
+    res.render('books/show', {book: book})
+
+  } catch {
+    res.render('/')
+  }
+})
 
 module.exports = router
