@@ -74,12 +74,46 @@ function removeBookCover(fileName) {
 
 
 
+// Edit book route
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id)
+    renderEditPage(res, book)
+  } catch {
+    res.redirect('/')
+  }
+})
 
+
+router.put('/:id', upload.single('cover'), async (req, res) => {
+  let book
+
+  try {
+    book = await Book.findById(req.params.id)
+    book.title = req.body.title
+    book.author = req.body.author
+    book.publishDate = new Date(req.body.publishDate)
+    book.pageCount = req.body.pageCount
+    book.description = req.body.description
+   
+    await book.save()
+    res.redirect(`/books/${book.id}`)
+  } catch {
+    if (book != null) {
+      renderEditPage(res, book, true)
+    } else {
+      redirect('/')
+    }
+  }
+})
 
 
 
 async function renderNewPage(res, book, hasError = false) {
-  try {
+  renderFormPage(res, book, 'new', hasError)
+}
+  
+  /*try {
     const authors = await Author.find({})
     const params = {
       authors: authors,
@@ -90,8 +124,69 @@ async function renderNewPage(res, book, hasError = false) {
   } catch {
     res.redirect('/books')
   }
+}*/
+
+
+
+
+async function renderEditPage(res, book, hasError = false) {
+  renderFormPage(res, book, 'edit', hasError)
+}
+  /*try {
+    const authors = await Author.find({})
+    const params = {
+      authors: authors,
+      book: book
+    }
+    if (hasError) params.errorMessage = 'Error Creating Book'
+    res.render('books/edit', params)
+  } catch {
+    res.redirect('/books')
+  }
+}*/
+
+
+
+async function renderFormPage(res, book, form, hasError = false) {
+  try {
+    const authors = await Author.find({})
+    const params = {
+      authors: authors,
+      book: book
+    }
+    if (hasError) {
+      if (form === 'edit') {
+        params.errorMessage = 'Error Updating Book'
+      } else {
+        params.errorMessage = 'Error Creating Book'
+      }
+    }
+    res.render(`books/${form}`, params)
+  } catch {
+    res.redirect('/books')
+  }
 }
 
+
+router.delete('/:id', async (req, res )=> {
+  let book
+   try {
+    book = await Book.findById(req.params.id)
+    await book.remove()
+    res.redirect('/books')
+
+   } catch {
+    if (book != null) {
+      res.render('books/show', {
+        book: book,
+        errorMessage: 'Cant Remove Book'
+      })
+    } else {
+      res.redirect('/')
+    }
+
+   }
+})
 
 router.get('/:id', async (req, res )=> {
   try{
@@ -103,5 +198,7 @@ router.get('/:id', async (req, res )=> {
     res.render('/')
   }
 })
+
+
 
 module.exports = router
