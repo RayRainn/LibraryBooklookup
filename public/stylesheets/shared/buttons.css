@@ -1,0 +1,81 @@
+:root {
+    --color-btn-primary-background: hs1(var(--color-base-hue), 100%, 83%);
+    --color-btn-primary-text: hs1(var(--color-base-hue), 100%, 20%);
+    --color-btn-border: black;
+
+
+    --color-btn-del-background: hsl(var(--color-del-hue), 100%, 83%);
+    --color-btn-del-text: black;
+
+    --color-btn-primary-background-dark: hsl(var(--color-base-hue), 100%, 73%);
+
+    --color-btn-del-background-dark: hsl(var(--color-base-hue), 100%, 83%);
+    --color-btn-del-background: hsl(var(--color-base-hue), 100%, 73%);
+    --color-btn-del-text: hsl(var(--color-base-hue), 100%, 10%);
+
+    --color-btn-del-background-dark: black;
+     
+}
+
+
+
+
+.btn {
+    border: 1px solid var(--color-btn-border);
+    border-radius: .5rem;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    font-family: 'Gotham Rounded';
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-primary {
+    color: var(--color-btn-primary-text);
+    background-color: var(--color-btn-primary-background);
+
+}
+
+
+.btn-primary:hover {
+    color: var(--color-btn-primary-text-dark);
+    background-color: var(--color-btn-primary-background-dark);
+
+}
+
+.btn-del {
+
+    color: var(--color-btn-del-text);
+    background-color: var(--color-btn-del-background);
+
+}
+
+
+.btn-del {
+
+    color: var(--color-btn-del-text-dark);
+    background-color: var(--color-btn-del-background-dark);
+
+}
+
+
+.btn-row {
+    display: flex;
+    align-items: flex-start;
+
+}
+
+
+.btn-row > * {
+    margin-left: 1rem;
+
+
+}
+
+
+.btn-row > *:first-child {
+    margin-left: 0;
+    
+
+}
