@@ -63,6 +63,38 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+
+//Delete confirmation page
+router.get('/:id/delete', async (req, res) => {
+    const author = await Author.findById(req.params.id)
+    const books = await Book.find({ author: author.id }).limit(6).exec()
+    res.render('authors/confirmation', {
+      author: author,
+      booksByAuthor: books
+    })
+  
+})
+
+
+router.post('/:id/delete', async (req, res) => {
+  
+  let author
+  try{
+ 
+    author = await Author.findById(req.params.id)
+    console.log(author)
+    await author.remove()
+    res.redirect('/authors')   
+ } catch {
+    res.render('authors')
+ }
+})
+
+   
+       
+  
+  
+
 router.get('/:id/edit', async (req, res) => {
   try {
     const author = await author.findById(req.params.id)
@@ -72,7 +104,7 @@ router.get('/:id/edit', async (req, res) => {
   }
 })
 
-router.put('/:id', async (req, res) => {
+router.post('/:id/edit', async (req, res) => {
   let author
   try {
     author = await Author.findById(req.params.id)
@@ -91,20 +123,16 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
+router.post('/:id', async (req, res) => {
+  
   let author
-  try {
+ 
     author = await Author.findById(req.params.id)
+    console.log(author)
     await author.remove()
     res.redirect('/authors')
-  } catch {
-    if (author == null) {
-      res.redirect('/')
-    } else {
-      res.redirect(`/authors/${author.id}`)
-    }
-  }
 })
+  
 
 module.exports = router
 
