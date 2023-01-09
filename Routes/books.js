@@ -13,7 +13,6 @@ const upload = multer({
     callback(null, imageMimeTypes.includes(file.mimetype))
   }
 })
-
 // All Books Route
 router.get('/', async (req, res) => {
   let query = Book.find()
@@ -41,7 +40,6 @@ router.get('/', async (req, res) => {
 router.get('/new', async (req, res) => {
   renderNewPage(res, new Book())
 })
-
 // Create Book Route
 router.post('/', upload.single('cover'), async (req, res) => {
   const fileName = req.file != null ? req.file.filename : null
@@ -72,7 +70,15 @@ function removeBookCover(fileName) {
   })
 }
 
+router.get('/:id/delete', async (req, res) => {
+  const author = await Author.findById(req.params.id)
+  const books = await Book.find({ author: author.id }).limit(6).exec()
+  res.render('authors/confirmation', {
+    author: author,
+    booksByAuthor: books
+  })
 
+})
 
 // Edit book route
 router.get('/:id/edit', async (req, res) => {
@@ -168,7 +174,7 @@ async function renderFormPage(res, book, form, hasError = false) {
 }
 
 
-router.delete('/:id', async (req, res )=> {
+router.post('/:id', async (req, res )=> {
   let book
    try {
     book = await Book.findById(req.params.id)
@@ -198,7 +204,6 @@ router.get('/:id', async (req, res )=> {
     res.render('/')
   }
 })
-
 
 
 module.exports = router
