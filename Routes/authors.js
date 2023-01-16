@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Author = require('../models/authors')
 const Book = require('../models/book')
+const User =require('../models/users')
 
 
 
@@ -78,16 +79,20 @@ router.get('/:id/delete', async (req, res) => {
 
 router.post('/:id/delete', async (req, res) => {
   
-  let author
-  try{
- 
+   let author
+  try {
     author = await Author.findById(req.params.id)
-    
     await author.remove()
-    res.redirect('/authors')   
- } catch {
-    res.render('authors')
- }
+    res.redirect('/authors')
+  } catch {
+    if (author == null) {
+      res.redirect('/')
+    } else {
+      res.redirect(`/authors`),{
+      errorMessage: 'Unable to delete due to books still there'
+      }
+    }
+  }
 })
 
    
@@ -139,56 +144,3 @@ module.exports = router
 
 
 
-
-
-
-
-/*
-router.get('/:id', (req, res) => {
-  res.send('Show Author ' + req.params.id)
-})
-
-router.get('/:id/edit', async (req, res) => {
-  try{
-    const author = await Author.findById(req.params.id)
-    res.render('authors/edit', {author: author})
-
-
-  } catch {
-    res.redirect('/authors')
-
-  } 
-}) 
-
-
-router.put('/:id', (req, res)=> {
-  res.send('Update Author '+ req.params.id)
-})
-
-router.delete('/:id', async (req, res) => {
-  let author
-  try {
-    author = await Author.findById(req.params.id)
-    await author.remove()
-    res.redirect('/authors')
-  } catch {
-    if (author == null) {
-      res.redirect('/')
-    } else {
-      res.redirect(`/authors/${author.id}`)
-    }
-  }
-})
-
-
-module.exports = router
-
-
-/*const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://woofwoofcr12:<randomschool1>@cluster0.0zrt9cv.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});*/

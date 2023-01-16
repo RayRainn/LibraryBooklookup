@@ -188,7 +188,7 @@ router.post('/:id', async (req, res )=> {
         errorMessage: 'Cant Remove Book'
       })
     } else {
-      res.redirect('/')
+      res.redirect('/books')
     }
 
    }
