@@ -1,0 +1,13 @@
+<h2 class="page-header"> Are you sure? </h2>
+<h2 class="page-header"><%= author.name, "Are you sure?" %></h2>
+<div class="btn-row">
+  <%- include('../partials/deleteForm',
+              { url: `/authors/${author.id}` }) %>     
+              <a class="btn btn-del" href="/authors/">Cancel</a>     
+</div>
+
+
+<% if (booksByAuthor.length > 0) { %>
+  <h2 class="page-header">Books By Author</h2>
+  <%- include('../partials/bookGrid', { books: booksByAuthor }) %>
+<% } %>
