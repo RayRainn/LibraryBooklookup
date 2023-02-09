@@ -36,6 +36,6 @@
   padding: 1rem;
 }
 
-.header-nav li a:hover, .header-title:hover {
+.header-nav li a:hover {
   color: white;
 }
