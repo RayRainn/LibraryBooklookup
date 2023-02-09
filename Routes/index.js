@@ -19,39 +19,41 @@ router.get('/home', async (req, res) => {
 
 
 //Login user
-router.get('/', (req, res) => {
-  res.render('index')
+router.get('/register', (req, res) => {
+  res.render('register')
 
 }) 
 
 
-router.get('/login', async (req, res) => {
-  res.render('login')
+router.get('/', async (req, res) => {
+  res.render('index')
   
 })
 
-router.post('/login', async (req, res) => {
-  console.log("HI")
+router.post('/', async (req, res) => {
+  
+  
   try{  
     const valid=await users.findOne({name:req.body.name})
     if (valid.password===req.body.password){
       res.render('home')
-    
+    //<%- include('partials/bookGrid', { books: books, large: true }) %> 
+    //move this to  home.ejs when fixed
     }
     else{
-      console.log("HI")
-      res.send("Incorrect Password Try again?")
-      res.render('home')
+    
+  
+      res.render('index')
     }
   }catch{
-    console.log("HI")
-    res.render('home')
+   
+    res.render('index')
   }
 })
 
 
 //Register and upload to DB 
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
   
   const user = ({
     name: req.body.name,
@@ -63,6 +65,9 @@ router.post('/', async (req, res) => {
   await users.insertMany([user])
   
     res.redirect('/')
+
+
+  
   })
 
 
