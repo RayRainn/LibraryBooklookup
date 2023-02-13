@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
   try{  
     const valid=await users.findOne({name:req.body.name})
     if (valid.password===req.body.password){
-      res.render('home')
+      res.render('home/index')
     //<%- include('partials/bookGrid', { books: books, large: true }) %> 
     //move this to  home.ejs when fixed
     }

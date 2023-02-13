@@ -30,6 +30,11 @@ body {
   margin: 0 2rem;
 }
 
+.page-header :hover {
+  color: white;
+  
+}
+
 .page-header {
   font-size: 2rem;
   font-weight: 500;
